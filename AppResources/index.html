@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>About Music</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="theme-color" content="#2bbeea">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="icon/style.css">
+</head>
+<style type="text/css" media="screen">
+	*{
+		margin:0;
+		padding:0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	body{
+		overflow: hidden;
+		background:url("img/back.jpg");
+		background-size:100%;
+		background-repeat:no-repeat;
+		background-attachment:fixed;
+	}
+	#pages{
+		position: relative;
+		width:1300%;
+		height:100vh;
+		display:flex;
+		filter:blur(20px);
+	}
+	#pages > .page{
+		position: relative;
+		width:10%;
+	}
+	#pages > .page #appTitle{
+		font-size:1.4rem;
+		width:100%;
+		position: relative;
+		top:0%;
+		color:#fff;
+		padding:7% 5%;
+		z-index:1;
+	}
+	#pages .page .form{
+		background:#fff;
+		width:90%;
+		padding:10% 5%;
+		border-radius:10px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		-webkit-transform:translate(-50%, -50%);
+		-ms-transform:translate(-50%, -50%);
+		-o-transform:translate(-50%, -50%);
+		transform:translate(-50%, -50%);
+	}
+	#pages .page .form label{
+		font-size:3rem;
+		color:#fff;
+	}
+	#pages .page .form input{
+		font-size:1.37em;
+		font-weight:bold;
+		outline:none;
+		box-shadow:none;
+	}
+	#pages .page .form small{
+		font-size:1em;
+		color:#ddd!IMPORTANT;
+	}
+
+	.next{
+		background:#fff;
+		position:fixed;
+		bottom:0;
+		right:0;
+		margin:-5%;
+		font-size:3rem;
+		padding:10%;
+		border-radius:100%;
+		z-index:100;
+		box-shadow:0 0 20px rgba(0, 0, 0,.5);
+		-webkit-transition:all 0.3s linear;
+		-o-transition:all 0.2s linear;
+		transition:all 0.2s linear;
+		filter:blur(20px);
+	}
+	
+
+	#pages .page .contain{
+		width:100%;
+		height:100vh;
+	}
+	#pages .page .contain > *{
+		width:80%;
+		position: relative;
+		left:10%;
+		margin-bottom:10%;
+		padding:5%;
+		text-align:center;
+		font-size:1.6em;
+		border-radius:10px;
+		color:#eee;
+		display:none;
+	}
+	#pages .page .contain h1{
+		margin-top:10%;
+		background:#fff;
+		padding:6%;
+		color:#ddd;
+		text-align:center;
+	}
+	.alert{
+		position:fixed;
+		bottom:0;
+		left:0;
+		margin:5%;
+		width:100%;
+		display:none;
+		font-size:1.2rem;
+		z-index:99!IMPORTANT;
+	}
+	#pages .page #points{
+		position:relative;
+		left:10%;
+		width:80%;
+		padding:5%;
+		height:100vh;
+	}
+	#pages .page #points > *{
+		display:block;
+		text-align:center;
+	}
+	audio{
+		display:none;
+	}
+	#pages .page #points #ansN{
+		margin-top:5%;
+		width:110%;
+		position: relative;
+		left:-5%;
+		padding:8%;
+		font-size:1.7rem;
+		text-align:left;
+		border-radius:20px;
+		font-weight:bold;
+
+	}
+	#pages .page #points #result{
+		position:absolute;
+		color:#fff;
+		width:70%;
+		z-index:2;
+		position:absolute;
+		top:70%;
+		left:50%;
+		-webkit-transform:translate(-50%, -50%);
+		-ms-transform:translate(-50%, -50%);
+		-o-transform:translate(-50%, -50%);
+		transform:translate(-50%, -50%);
+		padding:5%;
+		border-radius:20px;
+		font-size:3rem;
+		box-shadow:0 0 10px rgba(0, 0, 0,.3);
+	}
+@keyframes pointsS{
+0%{font-size:7rem;}
+50%{font-size:9rem;}
+100%{font-size:7rem;}
+}
+	#pages .page #points span{
+		font-weight:bold;
+		padding:15%;
+		color:#dc3545;
+		border-radius:100%;
+		margin-top:10%;
+		font-size:7rem;
+		position:absolute;
+		top:45%;
+		left:50%;
+		-webkit-transform:translate(-50%, -50%);
+		-ms-transform:translate(-50%, -50%);
+		-o-transform:translate(-50%, -50%);
+		transform:translate(-50%, -50%);
+		-webkit-transition:all 0.7s ease-out;
+		-moz-transition:all 0.7s ease-out;
+		-o-transition:all 0.7s ease-out;
+		transition:all 0.7s ease-out;
+	}
+	#pages .page #points .send{
+		position:absolute;
+		bottom:5%;
+		padding:5%;
+		font-size:1.6rem;
+		font-weight:bold;
+		border-radius:10px;
+		right:0;
+		width:100%;
+		text-align:center!IMPORTANT;
+		color:#fff;
+	}
+
+	#pages .page #results{
+	position:absolute;
+		top:50%;
+		left:50%;
+		-webkit-transform:translate(-50%, -50%) scale(0.9, 0.9);
+		-ms-transform:translate(-50%, -50%) scale(0.9, 0.9);
+		-o-transform:translate(-50%, -50%) scale(0.9, 0.9);
+		transform:translate(-50%, -50%) scale(0.9, 0.9);
+		width:100%;
+		height:100vh;
+	}
+	#pages .page #results h1{
+		color:#fff;
+		display:inline-block;
+		margin:5%;
+		padding:3%;
+	}
+	#pages .page #results .usrName{
+		position:relative;
+		padding:3% 8%;
+		width:80%;
+		border-radius:10px;
+		text-align:left;
+		margin-bottom:10%;
+	}
+	@keyframes crownMove{
+	 0%{transform:rotate(38deg);}
+	 25%{transform:rotate(20deg);}
+	 50%{transform:rotate(38deg);}
+	 75%{transform:rotate(20deg);}
+	 100%{transform:rotate(38deg);}
+	}
+	#pages .page #results .usrPoints .icon-crown{
+	 position:absolute;
+	display:inline-block;
+	-webkit-transform:rotate(-38deg);
+	-moz-transform:rotare(-38deg);
+	-o-transform:rotate(-38deg);
+	transform:rotate(-38deg);
+	animation:crownMove 1s linear infinite;
+		z-index:10;
+	}
+		#pages .page #results .usrPoints{
+			position:absolute;
+			width:100px;
+			height:100px;
+			border-radius:100%;
+			margin-top:1.5%;
+			right:0;
+			z-index:3;
+		}
+		#pages .page #results .usrPoints .circleRest{
+			color:#555;
+			font-weight:bold;
+			position:absolute;
+			top:50%;
+			left:50%;
+			-webkit-transform:translate(-50%, -50%);
+			-ms-transform:translate(-50%, -50%);
+			-o-transform:translate(-50%, -50%);
+			transform:translate(-50%, -50%);
+			
+		}
+		.first{
+	color:#ffc107;
+	font-size:7rem;
+	top:-63%;
+	right:-35%;
+}
+.second{
+	color:#bdbdbd;
+	font-size:6rem;
+	top:-50%;
+	right:-26%;
+}
+.third{
+	color:#a1887f;
+	font-size:5rem;
+	top:-45%;
+	right:-22%;
+}
+.timeShow{
+	box-shadow:0 0 10px rgba(0, 0, 0,.3);
+	position: fixed;
+	top:0;
+	right:0;
+	padding:2% 10%;
+	border-radius:0px 0 0px 20px;
+	filter:blur(20px);
+	z-index:2;
+}
+.timeShow .timeS{
+	font-size:1.3rem;
+}
+.time{
+	position: absolute;
+	font-size:1.3rem;
+	padding:2% 17% 2% 5%;
+	border-radius:20px;
+	margin-top:-35%;
+	margin-left:50%;
+	z-index:2;
+	
+}
+#shadowStop{
+	width:100%;
+	height:100vh;
+	position: fixed;
+	top:0;
+	background:rgba(255,255,255,.4);
+	z-index:10000;
+}
+#shadowStop h1{
+	color:#fff;
+	width:80%;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+	padding:8%;
+	font-size:1.7rem;
+	border-radius:20px;
+	box-shadow:0 0 20px rgba(0, 0, 0,.5);
+	transition:all 0.7s linear;
+}
+@keyframes load{
+	0%{width:27px;}
+	50%{width:00px;}
+	100%{width:27px;}
+}
+#shadowStop h1 div{
+	width:10%;
+	position: relative;
+	top:7px;
+	overflow: hidden;
+	width:27px;
+	animation:load 1s linear infinite;
+	display:inline-block;
+}
+#pageNumber{
+	position:fixed;
+	bottom:0;
+	left:0;
+	padding:5%;
+	border-radius:0px 20px 0 0px;
+	display:none;
+	transition:all 0.3s ease-out;
+	box-shadow:0 0 20px rgba(0, 0, 0,.3);
+	filter : blur(20px);
+}
+#pageNumber h1{
+	font-size:1.5rem;
+}
+</style>
+<body>
+	<div id="shadowStop">
+		<h1 class="bg-danger text-light">Espera a que inicie el juego <div>...</div></h1>
+	</div>
+		<audio id="correctMS" controls>
+				<source src="correct.mp3" type="audio/mp3">
+		</audio>
+		<audio id="wrongMS" controls>
+			<source src="wrong.mp3" type="audio/mp3">
+		</audio>
+		<div class="timeShow bg-warning text-light">
+		
+		</div>
+	<span class="icon-arrow-right2 next"></span>
+	<div id="pageNumber" class="bg-dark text-light">
+		<h1>1 / 10</h1>
+	</div>
+	<div class="alert alert-success" role="alert">
+  Respuesta Correcta :v
+</div>
+	<section id="pages">
+		<div class="page">
+			<h1 id="appTitle" class="bg-danger text-light">About Music</h1>
+			<section class="form bg-primary">
+  				<div class="form-group">
+    				<label for="nombre">Nombre:</label>
+    				<input type="email" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp" placeholder="Maximo 10 Caracteres" maxlength="10">
+    				<small id="emailHelp" class="form-text text-muted">Este nombre se mostrara en la lista de jugadores.</small>
+  				</div>
+			</section>
+		</div>
+	</section>
+</body>
+<script src="jquery-3.3.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8" async defer>
+	$(document).ready(function(){
+		var countPage = 0;
+		var points = 0;
+		var leftS = 0;
+		var ans;
+		var data;
+		var name = "";
+		var intPo = 0;	
+		var classCrown = ['first', 0,0,0,'second',0,0,0, 'third'];
+		var classtoAdd = ['bg-danger', 'bg-success', 'bg-primary'];
+		var ansSect = ['Simple Plan', 'Alex', 'Becasue are Awesome', 'Is the best', 'a Dj', 'a Singer', 'Saturday', 'You are my Crush', 'a Singer', 'a gender of music'];
+		var quest = [
+			'What is my favorite band?', 
+			'What is my Name?',
+			'Why simple plan are the best',
+			'What do you tinhk about Electronic?',
+			'Who is Marshmellow?',
+			'Who is Dua Lipa?',
+			'Today is?',
+			'What do you think about me?',
+			'Who is Ed Sheeran?',
+			'What is Rock?'
+			 ];
+		var ansCol1 =[
+			'Simple Plan',
+			'Alex',
+			'Becasue are Awesome',
+			'Is the best',
+			'a Dj',
+			'a Singer',
+			'Saturday',
+			'You are Handsome',
+			'a Singer',
+			'a gender of music'
+		];
+		var ansCol2 = [
+			'Green Day',
+			'Daniel',
+			'Becasue are Handsome',
+			'Its bad',
+			'a Singer',
+			'a Dj',
+			'Sunday',
+			'You are Awesome',
+			'a Dj',
+			'an stone'
+		];
+		var ansCol3 = [
+			'Maroon 5',
+			'Jose',
+			'Becasue are Canadians',
+			'sucks!',
+			'a Runner',
+			'an Artist',
+			'Monday',
+			'You are my Crush',
+			'a Soccer Player',
+			'i dont know'
+		];
+		var childRest = [];
+		var randS = 0;
+		var randArray = new Array();
+		var time = 0;
+		var start = 0;
+
+		for(var e = 0; e < 10; e++){
+			$("#pages").append('<div class="page"><section class="contain"><h1 class="title bg-dark"></h1><button class="btn btn-info"></button><button class="btn btn-success"></button><button class="btn btn-danger"></button></section></div>');
+		}
+		$("#pages").append('<div class="page"><section id="points"><h1 id="ansN" class="text-light bg-danger"></h1><h1 id="result" class="bg-dark"></h1><span class="icon-sad bg-light"></span><a class="btn btn-primary send">Ver Jugadores</a></section></div>');
+		$("#pages").append('<div class="page"><section id="results"></section>');
+			
+			
+			setInterval(function (){
+				data = {
+					"func" : 5
+				}
+				if(countPage < 11){
+					$.ajax({
+						data : data,
+						type : "GET",
+                		url : 'rows.php',
+                		async : true,
+						success:function(data){
+							time = data;
+							if(time >= 1){
+								setTimeout(function(){
+								$("#pages").css({
+									"filter" : "blur(0)"
+								})
+								$(".next").css({
+									"filter" : "blur(0)"
+								})
+								$("#pageNumber").css({
+									"filter" : "blur(0px)"
+								})
+								$(".timeShow").css({
+									"filter" : "blur(0)"
+								})}, 300);
+								$("#shadowStop h1").delay(700).css({
+									"transform" : " translate(-50%, -50%) scale(1.5, 1.5)"
+								})
+								$("#shadowStop").fadeOut(700);
+							}else{
+								setTimeout(function(){
+								$("#pages").css({
+									"filter" : "blur(20px)"
+								})
+								$(".next").css({
+									"filter" : "blur(20px)"
+								})
+								$("#pageNumber").css({
+									"filter" : "blur(20px)"
+								})
+								$(".timeShow").css({
+									"filter" : "blur(20px)"
+								})}, 300);
+								$("#shadowStop h1").delay(700).css({
+									"transform" : " translate(-50%, -50%) scale(1, 1)"
+								})
+								$("#shadowStop").show();
+							}
+								
+							$(".timeShow").html(data);
+						}
+            		})
+				}
+			}, 300);
+		
+		$(".next").click(function(){
+			start++;
+			if(start == 1){
+				$("#pageNumber").fadeIn(500);
+			}
+			nextPage();
+			if(countPage == 1){
+			if($("#pages .page .form input").val() != ""){
+			
+				name = $("#pages .page .form input").val();}else{
+				
+				 name = "Wacha";
+				}
+			}
+			$(".next").css({
+				"transform" : "scale(1.4, 1.4)"
+			});
+			setTimeout(function(){
+				$(".next").css({
+						"transform" : "scale(1, 1)"
+				})
+			}, 300);
+		})
+	var sendPr = 0;
+		function  getData(){
+	data = {
+		"func" : 1
+	}
+		$.ajax({  
+			data : data,
+            dataType : 'text',
+            url  : 'rows.php',
+            async : true,
+            
+            success:function(data) {
+                 $('#results').html(data);
+                childRest = $("#results").children();
+			  for(var i = 0;i <= $(childRest).length;i = i+4){
+      
+        
+	  $(childRest[i]).removeClass().addClass("usrName").addClass(classtoAdd[i/4]);
+  if(i  > 8){
+  $(childRest[i]).removeClass().addClass("usrName").addClass("bg-dark");
+  }
+  }
+  for(var e = 1;e < $(childRest).length;e = e +4){
+	  var crown = $(childRest[e]).find(".icon-crown");
+	  $(crown).addClass(classCrown[e-1]);
+	  if(e  > 9){
+  			$(crown).css({
+				  "display" : "none"
+			  });
+  		}
+  }
+		 $("#pages .page #results .bg-dark span").css({
+		"display" : "none"
+		})
+		
+		}
+
+       		 });
+	
+		}
+		$("#pages .page .contain .btn").click(function(){
+			ans = $(this).text();
+			if(ans == ansSect[randArray[countPage - 1]]){
+				correct();
+			}else{
+				wrong();
+			}
+		})
+		
+		function rand(min, max) {
+  			return Math.floor(Math.random() * (max - min)) + min;
+		}
+
+		function addToRand(variable, array, min, max){
+			if(countPage < 11){
+			variable = rand(min, max);
+			if(array.includes(variable) == false){
+				array[countPage - 1] = variable;
+			}else{
+				addToRand(variable,array, min, max);
+			}}
+		}
+		var arrayRs;
+		function sortArray(array){
+			var randBtn = rand(0, 3);
+			var randBtn1 = rand(0, 3);
+			var randBtn2 = rand(0, 3);
+
+			if(randBtn != randBtn1 && randBtn1 != randBtn2 && randBtn2 != randBtn){
+				array = [array[randBtn], array[randBtn1], array[randBtn2]];
+				arrayRs = array;
+			}else{
+				sortArray(array);
+			}
+		}
+		function nextPage(){
+			countPage++;
+			$("#pageNumber").css({
+				"transform" : "scale(1.3, 1.3)"
+			})
+			setTimeout(function(){
+				$("#pageNumber").css({
+				"transform" : "scale(1, 1)"
+			})
+			}, 300);
+			$("#pageNumber h1").text(countPage+" / 10");
+			leftS = leftS - 100;
+			$("#pages").animate({
+				left : leftS + "%"
+			}, 300);
+			var childParent = $("#pages").children();
+			var childPage = $(childParent[countPage]).find(".contain");
+			var contentPage =  $(childPage).children();
+			var titleS = $(childPage).find("h1");
+			var randArrayB = [
+				".btn-info" , ".btn-success" , ".btn-danger"
+			];
+			sortArray(randArrayB);
+			console.log(arrayRs);
+			var btn1 = $(childPage).find(arrayRs[0]);
+			var btn2 = $(childPage).find(arrayRs[1]);
+			var btn3 = $(childPage).find(arrayRs[2]);
+
+			addToRand(randS,randArray, 0, 10);
+
+			$(titleS).text(quest[randArray[countPage - 1]]);
+			$(btn1).text(ansCol1[randArray[countPage - 1]]);
+			$(btn2).text(ansCol2[randArray[countPage - 1]]);
+			$(btn3).text(ansCol3[randArray[countPage - 1]]);
+
+			for(var e = 0; e < 4;e++){
+				$(contentPage[e]).delay(e*500).fadeIn(500);
+			}	
+			console.log(countPage);
+			if(countPage > 10){
+				$(".next").fadeOut(500);
+				$("#pageNumber").fadeOut(500);
+				$("#pages .page #points #ansN").text(name + " obtuviste un total de:");
+				
+				
+			setInterval(function(){
+			if (intPo >= points){
+			  intPo = points;
+			  $("#pages .page #points span").css({
+				 "animation" : "pointsS 0.6s linear infinite"
+			 })
+			 clearInterval();
+			}else{
+			   intPo++;
+			}
+
+			if(intPo >= 5 && intPo < 8){
+				$("#pages .page #points span").css({
+					"color" : "#ffc107"
+				});
+				$("#pages .page #points span").removeClass("icon-sad").addClass("icon-smile");
+				
+			}else if(intPo >= 8){
+				$("#pages .page #points span").css({
+					"color" : "#4caf50"
+				});
+				$("#pages .page #points span").removeClass("icon-smile").addClass("icon-happy");
+				
+			}
+			$("#pages .page #points #result").text(intPo + " / 10");
+			
+			}, 200);
+			}
+		}
+		$(".send").click(function(){
+			$(".timeShow").fadeOut(500);
+			sendPr++;
+			console.log("Correct");
+			
+			var data = {
+            	"name" : name,
+            	"pts" : points,
+				"time" : time, 
+				"func" : 4
+      		}
+			  if(sendPr == 1){
+			$.ajax({  
+            type : 'GET',
+            url  : 'rows.php',
+            data:  data     
+       		 });
+			}
+nextPage();
+$("body").css({ "overflow-y": "visible"});
+        getData();
+		setInterval(getData, 1000);
+		});
+
+
+		function correct(){
+			points++;
+			$("#correctMS")[0].play();
+			$(".alert").removeClass('alert-danger').addClass("alert-success").text("Respuesta Correcta :v").slideDown(300);
+			setTimeout(function(){
+				$(".alert").slideUp(300);
+				nextPage();
+			}, 800)
+		}
+
+		function wrong(){
+			$("#wrongMS")[0].play();
+			$(".alert").removeClass('alert-success').addClass("alert-danger").text("Respuesta Incorrecta :'v").slideDown(300);
+			setTimeout(function(){
+				$(".alert").slideUp(300);
+				nextPage();
+			}, 800)
+		}
+	})
+
+
+</script>
+</html>

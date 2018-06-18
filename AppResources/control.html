@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="theme-color" content="#2bbeea">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="icon/style.css">
+</head>
+<style>
+    *{
+		margin:0;
+		padding:0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	body{
+		overflow-x:hidden;
+		background:url("img/back.jpg");
+		background-position:center center;
+		background-size:100%;
+		background-attachment:fixed;
+	}
+	#pages{
+		position: relative;
+		width:100%;
+		height:100vh;
+		display:flex;
+	}
+	#pages > .page{
+		position:relative;
+        width:100%;
+	}
+	#pages .page #results{
+	position:absolute;
+		top:50%;
+		left:50%;
+		-webkit-transform:translate(-50%, -50%) scale(0.9, 0.9);
+		-ms-transform:translate(-50%, -50%) scale(0.9, 0.9);
+		-o-transform:translate(-50%, -50%) scale(0.9, 0.9);
+		transform:translate(-50%, -50%) scale(0.9, 0.9);
+		width:100%;
+		height:100vh;
+	}
+	#pages .page #results h1{
+		color:#fff;
+		display:inline-block;
+		margin:5%;
+		padding:3%;
+	}
+	#pages .page #results .usrName{
+		position:relative;
+		padding:3% 8%;
+		width:80%;
+		border-radius:20px;
+		text-align:left;
+		margin-bottom:10%;
+		overflow:hidden;
+	}
+	@keyframes crownMove{
+	 0%{transform:rotate(38deg);}
+	 25%{transform:rotate(20deg);}
+	 50%{transform:rotate(38deg);}
+	 75%{transform:rotate(20deg);}
+	 100%{transform:rotate(38deg);}
+	}
+	#pages .page #results .usrPoints .icon-crown{
+	 position:absolute;
+	display:inline-block;
+	-webkit-transform:rotate(-38deg);
+	-moz-transform:rotare(-38deg);
+	-o-transform:rotate(-38deg);
+	transform:rotate(-38deg);
+	animation:crownMove 1s linear infinite;
+	z-index:10;
+	text-shadow:0 -3px 10px rgba(0,0,0,.3);
+	}
+		#pages .page #results .usrPoints{
+			position:absolute;
+			width:100px;
+			height:100px;
+			border-radius:100%;
+			margin-top:1.5%;
+			z-index:3;
+			right:0;
+		}
+		#pages .page #results .usrPoints .circleRest{
+			color:#555;
+			font-weight:bold;
+			position:absolute;
+			top:50%;
+			left:50%;
+			-webkit-transform:translate(-50%, -50%);
+			-ms-transform:translate(-50%, -50%);
+			-o-transform:translate(-50%, -50%);
+			transform:translate(-50%, -50%);
+			
+		}
+		.first{
+	color:#ffc107;
+	font-size:7rem;
+	top:-63%;
+	right:-35%;
+}
+.second{
+	color:#bdbdbd;
+	font-size:6rem;
+	top:-50%;
+	right:-26%;
+}
+.third{
+	color:#a1887f;
+	font-size:5rem;
+	top:-45%;
+	right:-22%;
+}
+.time{
+	position: absolute;
+	font-size:1.3rem;
+	padding:2% 17% 2% 5%;
+	border-radius:20px;
+	margin-top:-35%;
+	margin-left:50%;
+	z-index:2;
+	
+}
+#notFound{
+	background:#fff;
+}
+ 
+@keyframes controls{
+	0%{font-size:7rem;}
+	50%{font-size:9rem;}
+	100%{font-size:7rem;}
+}
+@keyframes trash{
+	0%{font-size:4rem;}
+	50%{font-size:6rem;}
+	100%{font-size:4rem;}
+}
+#controls{
+	
+        position: absolute;
+        top:51%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        font-size:7rem;   
+        padding:15%;
+        border-radius:20% 20% 100% 100%;
+        transition:all 0.3s ease-out;
+		z-index:100;
+	}
+	#controls:hover{
+		cursor: pointer;
+		animation:controls 0.7s linear infinite;
+	}
+    .timeS{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        font-size:2rem;   
+        padding:5%;
+        transition:all 0.3s ease-out;
+        border-radius:10px;
+        box-shadow:0 0 20px rgba(0,0,0,.4);
+        display:none;
+		z-index:100;
+    }
+	#btns{
+		overflow: hidden;
+		position: fixed;
+		width:53.5%;
+		right:0;
+		height:100vh;
+		z-index:100;
+		display:none;
+		
+	}
+
+	.icon-bin2{
+		font-size:4rem;
+		padding:14%;
+		position: absolute;
+		bottom:0;
+		right:0;
+		border-radius:100% 100% 100% 0;
+		margin:-5%;
+		z-index:1;
+	}
+	.icon-bin2:hover{
+		cursor: pointer;
+		animation:trash 0.7s linear infinite;
+	}
+	
+	#trashText{
+		position: absolute;
+		bottom:10%;
+		right:0;
+		margin-right:28%;
+		padding:3%;
+		border-radius:20px;
+		z-index:2;
+		box-shadow:-10px 0 20px rgba(0,0,0,.5);
+		width:60%;
+		text-align:center;
+		font-size:1.5rem;
+		display:none;
+	}
+	#startText{
+		position: absolute;
+		top:32%;
+		left:50%;
+		transform:translate(-50%, -50%);
+		margin-right:18%;
+		padding:3% 3% 7% 3%;
+		border-radius:20px;
+		z-index:2;
+		width:85%;
+		text-align:center;
+	}
+	#ctrs{
+		position: relative;
+		top:78%;
+		width:100%;
+		height:22%;
+		border-radius:100% 100% 0 0;
+		background:rgba(33,33,33,1);
+	}
+	#info{
+		position: absolute;
+		width:60%;
+		top:0;
+		border-radius:0px 20px 20px 20px;
+		padding:3%;
+		font-size:1.2rem;
+		font-weight:bold;
+	}
+	
+@media screen and (min-width:455px){
+	body{
+		background-size:100%;
+	}
+	#pages .page #results .usrName{
+		padding:3%;
+		width:80%;
+		font-size:2.5em;
+		margin-top:11%;
+		margin-bottom:10%;
+		padding-left:5%;
+		margin-left:10%;
+		border-radius:10px;
+	}
+	.time{
+		font-size:1.5rem;
+	}
+	#pages .page #results .usrPoints{
+		left:65%;
+		margin-top:0%;
+		font-size:2.5rem;
+		padding:11%;
+	}
+
+	.first{
+	top:-67%;
+	right:-35%;
+	font-size:8rem;
+	
+	}
+	.second{
+	top:-57%;
+	font-size:7rem;
+	}
+	.third{
+	top:-50%;
+	font-size:6rem;
+}
+}
+@media screen and (min-width:520px){
+	#pages .page #results .usrName{
+		width:75%;
+		margin-left:12.5%;
+	}
+	.first{
+	top:-55%;
+	font-size:8rem;
+	right:-25%;
+	}
+	.second{
+	top:-45%;
+	font-size:7rem;
+	right:-20%;
+	}
+	.third{
+	top:-35%;
+	font-size:6rem;
+	right:-15%;
+	}
+}
+@media screen and (min-width:600px){
+	.time{
+		margin-top:-30%;
+	}
+	.first{
+	top:-50%;
+	font-size:9rem;
+	}
+	.second{
+	top:-40%;
+	font-size:8rem;
+	}
+	.third{
+	top:-30%;
+	font-size:7rem;
+	}
+}
+@media screen and (min-width:725px){
+
+	#pages .page #results .usrName{
+		width:40%;
+		margin-left:5%;
+	}
+	.time{
+		margin-left:20%;
+	}
+	#pages .page #results .usrPoints{
+		left:30%;
+		margin-top:6%;
+		padding:5%;
+	}
+	.first{
+	top:-50%;
+	font-size:6rem;
+	}
+	.second{
+	top:-40%;
+	font-size:5rem;
+	}
+	.third{
+	top:-30%;
+	font-size:4rem;
+	}
+	#btns{
+		width:43.5%;
+		display:block;
+	}
+}
+@media screen and (min-width:800px){
+	body{
+		background-size:50%;
+	}
+	#pages .page #results .usrName{
+	margin-bottom:5%;
+	}
+	.time{
+		margin-top:-23%;
+		padding-right:9%;
+		margin-left:23%;
+	}
+	.first{
+	top:-60%;
+	font-size:7rem;
+	right:-32%;
+	}
+	.second{
+	top:-50%;
+	font-size:6rem;
+	right:-25%;
+	}
+	.third{
+	top:-40%;
+	font-size:5rem;
+	right:-20%;
+	}
+
+}
+@media screen and (min-width:930px){
+	#trashText{
+		position: absolute;
+		bottom:10%;
+		right:0;
+		margin-right:28%;
+		padding:3%;
+		border-radius:20px;
+		z-index:2;
+		box-shadow:-10px 0 20px rgba(0,0,0,.5);
+		width:60%;
+		text-align:center;
+		font-size:1.8rem;
+		display:block;
+	}
+	#startText{
+		position: absolute;
+		top:29%;
+		left:50%;
+		transform:translate(-50%, -50%);
+		margin-right:18%;
+		padding:3% 3% 7% 3%;
+		border-radius:20px;
+		z-index:2;
+		width:65%;
+		text-align:center;
+	}
+	.time{
+		margin-top:-17%;
+	}
+	#pages .page #results .usrName{
+	margin-bottom:2%;
+	}
+	#btns{
+		width:43.5%;
+	}
+}
+@media screen and (min-width:1130px){
+	#trashText{
+		position: absolute;
+		bottom:10%;
+		right:0;
+		margin-right:23%;
+		padding:3%;
+		border-radius:20px;
+		z-index:2;
+		box-shadow:-10px 0 20px rgba(0,0,0,.5);
+		width:60%;
+		text-align:center;
+		font-size:2rem;
+	}
+	#startText{
+		position: absolute;
+		top:28%;
+		left:50%;
+		transform:translate(-50%, -50%);
+		margin-right:18%;
+		padding:3% 3% 7% 3%;
+		border-radius:20px;
+		z-index:2;
+		width:60%;
+		text-align:center;
+	}
+	#pages .page #results .usrName{
+	border-radius:30px;
+	margin-bottom:0%;
+	padding-left:3%;
+	}
+	.first{
+	top:-70%;
+	font-size:9rem;
+	right:-40%;
+	}
+	.second{
+	top:-60%;
+	font-size:8rem;
+	right:-35%;
+	}
+	.third{
+	top:-50%;
+	font-size:7rem;
+	right:-25%;
+	}
+	.time{
+		font-size:2rem;
+		padding:1% 9% 1% 3%;
+		margin-top:-13%;
+	}
+	.icon-bin2{
+		padding:10%;
+	}
+}
+@media screen and (min-width:1250px){
+	#btns{
+		width:53.5%;
+	}
+	#controls{
+        padding:10%;
+    }
+	#pages .page #results .usrName{
+	margin-top:7%;
+	width:30%;
+	}
+	.first{
+	top:-55%;
+	font-size:9rem;
+	right:-25%;
+	}
+	.second{
+	top:-45%;
+	font-size:8rem;
+	right:-20%;
+	}
+	.third{
+	top:-35%;
+	font-size:7rem;
+	right:-10%;
+	}
+	#pages .page #results .usrPoints{
+		margin-top:4.5%;
+		margin-left:-4%;
+	}
+	.time{
+		margin-left:17%;
+		padding-right:6%;
+	}
+	#trashText{
+		position: absolute;
+		bottom:10%;
+		right:0;
+		margin-right:19%;
+		padding:3%;
+		border-radius:20px;
+		z-index:2;
+		box-shadow:-10px 0 20px rgba(0,0,0,.5);
+		width:43%;
+		text-align:center;
+		font-size:2rem;
+	}
+	#startText{
+		position: absolute;
+		top:33%;
+		left:50%;
+		transform:translate(-50%, -50%);
+		margin-right:18%;
+		padding:3% 3% 7% 3%;
+		border-radius:20px;
+		z-index:2;
+		width:45%;
+		text-align:center;
+	}
+}
+
+
+@media screen and (min-width:1200px){
+    .icon-play2{
+        padding:8%;
+        font-size:10rem; 
+    }
+   .timeS{
+        top:60%;
+        font-size:3rem; 
+        padding:2% 5%;
+    }
+}
+</style>
+<body>
+	<section id="btns">
+		<h1 id="startText" class="bg-light text-success">Iniciar Juego</h1><span class="icon-play2 bg-success text-light" id="controls"></span>
+			<h1 class="timeS bg-light text-dark">00:00s</h1>
+			<div id="ctrs">
+				<h1 id="trashText" class="bg-light text-danger">Borrar Jugadores</h1>
+				<span class="icon-bin2 text-light bg-danger"></span>
+			</div>
+	</section>
+    <section id="pages">
+		<div class="page">
+			<section id="results">
+					
+			</section>
+		</div>
+	</section>
+</body>
+<script src="jquery-3.3.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var classtoAdd = ['bg-danger', 'bg-success', 'bg-primary'];
+	var classCrown = ['first', 0,0,0,'second',0,0,0, 'third'];
+	var childRest = [];
+	var toggle = true;
+        var time = 0;
+        var cort= 0;
+        var milis = 0;
+        var micros = 0;
+        var data;
+		data = {
+            	"start" : time,
+                "milis" : (milis/10), 
+				"func" : 3
+      		    }
+                $.ajax({
+                type : 'GET',
+                data : data,
+                url : 'rows.php',
+                async : true,
+            })
+
+			function deleteS(){
+				data = {
+				"func" : 2
+      		}
+			  $.ajax({
+                type : 'GET',
+                data : data,
+                url : 'rows.php',
+                async : true
+            }) 
+			}
+		$(".icon-bin2").click(function(){
+			deleteS();
+		})
+		$("#trashText").click(function(){
+			deleteS();
+		})
+		setInterval(function(){
+			if($("#controls").hasClass("icon-play2") == true){
+					data = {
+						"func" : 6
+      		    	}
+			}else{
+				data = {
+            	"start" : time,
+                "milis" : (milis/10), 
+				"func" : 3
+      		    }
+			}
+				  $.ajax({
+                type : 'GET',
+                data : data,
+                url : 'rows.php',
+                async : true,
+            })
+				}, 1000);
+
+        $("#controls").click(function(){
+            cort++;
+            if(toggle == true){
+            $("#controls").css({
+                "padding":"200%",
+                "top" : "30%"
+            })
+            $("#controls").removeClass("icon-play2 bg-success").addClass("icon-stop bg-danger");
+            $(".timeS").delay(300).fadeIn(300);
+            if(cort == 1){
+              
+                    setInterval(function(){
+                if(toggle == false){
+                milis += 10;
+                if(milis == 1000){
+                    milis = 0;
+                    time++;
+                }
+                if(time < 10){
+                $(".timeS").text("0"+time+":"+milis/10);}
+                else{
+                    $(".timeS").text(time+":"+milis/10);
+                }
+                }
+            }, 8);
+            }
+                toggle = false;
+            }else{
+                time = time;
+                var w = $(window).width();
+                if(w >= 1200){
+                $("#controls").css({
+                "padding":"10%",
+                "top" : "50%"
+                })
+                }else{
+                    $("#controls").css({
+                "padding":"15%",
+                "top" : "50%"
+                })
+                }
+				
+				
+            $("#controls").addClass("icon-play2 bg-success").removeClass("icon-stop bg-danger");
+            $(".timeS").fadeOut(200);
+                toggle = true; 
+            }
+        });
+var w;
+    setInterval(getData, 1000);
+    function  getData(){
+		data = {
+			"func" : 1
+		};
+	console.log("Async Reload 1 Second");
+	$.ajax({  
+		data : data,
+		dataType : 'text',
+		url  : 'rows.php',
+		async : true,
+		
+		success:function(data) {
+			if(data != ""){
+			 	$('#results').html(data);
+			 console.log(data);
+			childRest = $("#results").children();
+		
+			for(var i = 0;i <= $(childRest).length;i = i+4){
+      
+        
+	  $(childRest[i]).removeClass().addClass("usrName").addClass(classtoAdd[i/4]);
+  if(i  > 8){
+  $(childRest[i]).removeClass().addClass("usrName").addClass("bg-dark");
+  }
+  }
+  for(var e = 1;e < $(childRest).length;e = e +4){
+	  var crown = $(childRest[e]).find(".icon-crown");
+	  $(crown).addClass(classCrown[e-1]);
+	  if(e  > 9){
+  			$(crown).css({
+				  "display" : "none"
+			  });
+  		}
+  }
+	 $("#pages .page #results .bg-dark span").css({
+	"display" : "none"
+	})
+		}else{
+			w = $(window).width();
+			$('#results').html("<h1 class='bg-light text-dark players'>No hay ningun jugador ...</h1>");
+			if(w > 1250){
+			$(".players").css({
+				"border-radius" : "20px", 
+				"margin" : "0",
+				"width" : "40%",
+				"font-size" : "2.1rem",
+				"text-align" : "center"
+			})
+			}else if(w < 1250 && w > 945){
+				$(".players").css({
+				"border-radius" : "20px", 
+				"margin" : "0",
+				"width" : "52%",
+				"font-size" : "2.5rem",
+				"text-align" : "center"
+			})
+			}else if(w < 945 && w > 725){
+				$(".players").css({
+				"border-radius" : "20px", 
+				"margin" : "0",
+				"width" : "52%",
+				"font-size" : "1.8rem",
+				"text-align" : "center"
+			})
+			}else if(w < 725){
+				$(".players").css({
+				"border-radius" : "20px", 
+				"margin" : "0",
+				"margin-left" : "10%",
+				"width" : "80%",
+				"font-size" : "2rem",
+				"text-align" : "center"
+			})
+			}
+		}
+	}
+
+			});
+
+	}
+</script>
+</html>
